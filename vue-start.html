@@ -12,18 +12,41 @@
 
 <body>
   <div id="app" v-bind:title="tip">
-    {{message}}
+    <h3>v-bind 用于绑定元素特性</h3>
+    <p>{{message}}</p>
+
+    <h3>v-on 用于绑定事件，v-if 用于条件判断</h3>
+    <button v-on:click="trigerSeen">triger</button>
     <p v-if="seen">现在你看到我了</p>
+
+    <h3>v-for 用于循环遍历</h3>
     <ul>
       <li v-for="item in list">{{item.text}}</li>
     </ul>
+
+    <h3>v-model 用于表单和应用状态的双向绑定</h3>
+    <p>你好 {{name}}</p>
+    <label>
+     姓名：<input type="text" v-model="name">
+    </label>
+
+    <h3>在 Vue 里，一个组件本质上是一个拥有预定义选项的一个 Vue 实例</h3>
+    <ol>
+      <todo-item v-for="item in todoList" v-bind:todo="item" v-bind:key="item.id"></todo-item>
+    </ol>
   </div>
 </body>
 
 <script>
+  Vue.component('todo-item', {
+    props: ['todo'],
+    template: '<li>{{todo.text}}</li>'
+  })
+
   var app = new Vue({
     el: '#app',
     data: {
+      name: '',
       message: 'hello vue',
       tip: 'vue is very popular',
       seen: true,
@@ -33,7 +56,22 @@
         text: 'CSS'
       }, {
         text: 'JavaScript'
+      }],
+      todoList: [{
+        id: 1,
+        text: '吃早饭'
+      }, {
+        id: 2,
+        text: '吃午饭'
+      }, {
+        id: 3,
+        text: '吃晚饭'
       }]
+    },
+    methods: {
+      trigerSeen: function() {
+        this.seen = !this.seen;
+      }
     }
   })
 </script>
