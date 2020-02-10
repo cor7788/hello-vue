@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学习 Vue</title>
+    <script src="./lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div>{{message}}</div>
+        <div>
+            <button v-on:click="showAlert">点我弹提示框</button>
+            <button @click="changeMessage('我变了')">点我修改 message</button>
+        </div>
+        <div>
+            <input type="text" v-on:keydown="showKeyCode">
+            <input type="text" v-on:keydown="addPrefix('a-', $event)">
+        </div>
+        <div v-text="testContent"></div>
+        <div v-html="testContent"></div>
+        <div><a v-bind:href="url">山川异域，风月同天</a></div>
+        <div><a :href="url">岂曰无衣，与子同袍</a></div>
+        <ul>
+            <li v-for="(item, index) in arr">{{index}} -- {{item}}</li>
+        </ul>
+        <ul>
+            <li v-for="(value, key) in product">{{key}} - {{value}}</li>
+        </ul>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            message: 'hello vue',
+            testContent : '<h1>hello world</h1>',
+            url: 'https://www.baidu.com',
+            arr: ['a', 'c', 'e', 'f'],
+            product: {
+                id: 1009,
+                name: 'iphone x',
+                price: '5000元'
+            }
+        },
+        methods: {
+            showAlert: function() {
+                alert("alert message.")
+            },
+            changeMessage: function(msg) {
+                this.message = msg
+            },
+            showKeyCode: function(event) {
+                // event 是原生对象
+                alert(event.keyCode)
+            },
+            addPrefix: function(prefix, event) {
+                event.preventDefault()
+                alert(prefix + event.keyCode)
+            }
+        }
+    });
+</script>
+</html>
